@@ -23,13 +23,20 @@ def create_web_session
         '--disable-dev-shm-usage',
         '--whitelisted-ips'
       ]
-      caps = Selenium::WebDriver::Remote::Capabilities.chrome("chromeOptions" => {"args" => args})
+      caps = Selenium::WebDriver::Remote::Capabilities.chrome("chromeOptions" => {
+        "args" => args,
+        "prefs" => {
+          'download.default_directory' => '/tmp',
+          'download.directory_upgrade' => true,
+          'download.prompt_for_download' => false
+        }
+      })
 
       Capybara::Selenium::Driver.new(
         app,
         browser: :remote,
         desired_capabilities: caps,
-        url: "http://chrome:4444/wd/hub"
+        url: ENV['CHROME_URL']
       )
     end
   end

@@ -6,6 +6,7 @@ sleep 1
 RSpec.describe 'basic_tests', type: :feature do
   before(:each) do
     @session = create_web_session
+    Dir.chdir "/tmp"
   end
 
   it 'Load page' do
@@ -13,7 +14,7 @@ RSpec.describe 'basic_tests', type: :feature do
     @session.find_link('Source code (zip)')
     @session.click_link('Source code (zip)')
     sleep 3
-    f = File.join('compose-1.27.0.zip')
+    f = File.join('/tmp','compose-1.27.0.zip')
     expect(File.exists?(f)).to be true
     File.delete(f)
   end

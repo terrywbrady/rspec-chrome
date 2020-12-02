@@ -1,6 +1,8 @@
 version: '3.7'
 networks:
   mynet:
+volumes:
+  downloads:
 services:
   rspec-chrome:
     container_name: rspec-chrome
@@ -16,6 +18,8 @@ services:
       mynet:
     depends_on:
     - chrome
+    volumes:
+    - downloads:/tmp
   chrome:
     container_name: chrome
     image: selenium/standalone-chrome
@@ -23,3 +27,4 @@ services:
       mynet:
     volumes:
     - /dev/shm:/dev/shm
+    - downloads:/tmp
