@@ -1,0 +1,25 @@
+version: '3.7'
+networks:
+  mynet:
+services:
+  rspec-chrome:
+    container_name: rspec-chrome
+    image: rspec-chrome
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      CHROME_URL: http://chrome:4444/wd/hub
+    stdin_open: true
+    tty: true
+    networks:
+      mynet:
+    depends_on:
+    - chrome
+  chrome:
+    container_name: chrome
+    image: selenium/standalone-chrome
+    networks:
+      mynet:
+    volumes:
+    - /dev/shm:/dev/shm
